@@ -1,6 +1,6 @@
 # fcron docker container
 
-This container includes the latest Fcron binaries.
+This container includes the latest fcron binaries.
 
 ## About fcron
 
