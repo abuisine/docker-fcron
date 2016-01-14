@@ -1,6 +1,12 @@
 # fcron docker container
 
-This container includes the latest fcron binaries.
+This container is based on the latest stable version (3.2.0).
+
+It is intended as an alternative to cron and anacron.
+
+Put your fcrontabs (see http://fcron.free.fr/doc/en/fcrontab.5.html) in /fcrontabs (filenames should end with .fcrontab)
+
+You can communicate with the daemon using fcrondyn (see http://fcron.free.fr/doc/en/fcrondyn.1.html)
 
 ## About fcron
 
