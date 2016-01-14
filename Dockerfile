@@ -3,9 +3,10 @@ MAINTAINER  Alexandre Buisine <alexandrejabuisine@gmail.com>
 LABEL version "3.2.0"
 
 # Update the package repository and install applications
-RUN apt-get update \
- && apt-get -y install ssmtp vim-tiny \
- && apt-get -y clean \
+RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update \
+ && apt-get -yqq install \
+ 	vim-tiny \
+ && apt-get -yqq clean \
  && rm -rf /var/lib/apt/lists/*
 
 # Update the package repository and install applications
