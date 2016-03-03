@@ -12,4 +12,4 @@ awk 'FNR==1{print ""}1' *.fcrontab
 ) &
 echo
 echo "Launching fcron daemon ..."
-exec fcron -f -d --nosyslog
+exec fcron -f --nosyslog
