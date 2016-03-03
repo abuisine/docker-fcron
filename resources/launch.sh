@@ -2,6 +2,8 @@
 DELAY=2
 
 echo "-----------------------"
+echo "Setting environment variables in fcrontabs"
+/usr/local/bin/ep *.fcrontab
 echo "Injecting the following configuration in background (${DELAY}s delay) :"
 awk 'FNR==1{print ""}1' *.fcrontab
 (
