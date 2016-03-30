@@ -28,4 +28,8 @@ RUN tar xzf fcron.3.2.0.tgz \
 VOLUME ["/fcrontabs", "/usr/local/var/spool/fcron"]
 WORKDIR /fcrontabs
 
+ENV FCRON_COMMANDS="EXAMPLE_CMD_1" FCRON_ENV_VARS="EXAMPLE_ENV_1" \
+ EXAMPLE_CMD_1='@ 1 echo $EXAMPLE_ENV_1' \
+ EXAMPLE_ENV_1="success"
+
 CMD ["/usr/local/bin/launch.sh"]
