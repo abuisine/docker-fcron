@@ -1,6 +1,6 @@
 FROM debian:jessie
 MAINTAINER  Alexandre Buisine <alexandrejabuisine@gmail.com>
-LABEL version "3.2.0"
+LABEL version "2.0.0"
 
 # Update the package repository and install applications
 RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update \

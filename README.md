@@ -4,9 +4,11 @@ This container is based on the latest stable version (3.2.0).
 
 It is intended as an alternative to cron and anacron.
 
-Put your fcrontabs (see http://fcron.free.fr/doc/en/fcrontab.5.html) in /fcrontabs (filenames should end with .fcrontab).
+## Usage
 
-Note that environment variables can be set in fcrontabs like this (they will be replaced on the first container start) : `VARIABLE=${VARIABLE}`
+Should you want to pass container environment variables to the fcron daemon, please set `FCRON_ENV_VARS` with environment variable names, separated by a "space".
+
+Each fcron command is set through an environment variable, which is then enabled through `FCRON_COMMANDS` (which works similarly than `FCRON_ENV_VARS`).
 
 You can communicate with the daemon using fcrondyn (see http://fcron.free.fr/doc/en/fcrondyn.1.html).
 

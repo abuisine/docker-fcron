@@ -2,7 +2,7 @@
 DELAY=2
 
 echo "-----------------------"
-rm fcrontab_1
+rm fcrontab_1 /usr/local/var/spool/root /usr/local/var/spool/root.orig
 echo "Setting environment variables in fcrontabs"
 for FCRON_ENV_VAR in $FCRON_ENV_VARS
 do
