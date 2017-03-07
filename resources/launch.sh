@@ -3,12 +3,11 @@ DELAY=2
 
 echo "-----------------------"
 rm fcrontab_1 /usr/local/var/spool/root /usr/local/var/spool/root.orig
-echo "Setting environment variables in fcrontabs"
-for FCRON_ENV_VAR in $FCRON_ENV_VARS
-do
-	echo "$FCRON_ENV_VAR=\${$FCRON_ENV_VAR}" >> fcrontab_1
-done
+echo "Storing environment for commands"
+set | grep -v -E "BASHOPTS|BASH_VERSINFO|EUID|PPID|SHELLOPTS|UID" > /tmp/environ
+
 echo "!stdout" >> fcrontab_1
+echo "SHELL=/usr/local/bin/environ_bash.sh" >> fcrontab_1
 for CMD in $FCRON_COMMANDS
 do
 	echo "\${$CMD}" >> fcrontab_1

@@ -1,35 +1,55 @@
-FROM debian:jessie
-MAINTAINER  Alexandre Buisine <alexandrejabuisine@gmail.com>
-LABEL version "2.0.0"
+FROM	debian:jessie
+LABEL	maintainer="Alexandre Buisine <alexandrejabuisine@gmail.com>"
+LABEL	version "4.0.0"
 
-# Update the package repository and install applications
+# This container should be built with the --squash option in order to avoid huge containers
+
 RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update \
  && apt-get -yqq install \
+ 	gcc \
+ 	make \
+ 	ssmtp \
  	vim-tiny \
  && apt-get -yqq clean \
  && rm -rf /var/lib/apt/lists/*
 
-ADD https://github.com/kreuzwerker/envplate/releases/download/v0.0.8/ep-linux /usr/local/bin/ep
-COPY resources/launch.sh /usr/local/bin
+ENV FCRON_VERSION="3.2.1"
 
-WORKDIR /usr/local
-COPY resources/fcron.3.2.0.tgz resources/fcron.conf ./
-RUN tar xzf fcron.3.2.0.tgz \
- && rm fcron.3.2.0.tgz \
- && useradd fcron \
- && mkdir -p var/spool/fcron \
- && mkdir /fcrontabs \
- && mv fcron.conf etc/ \
- && chmod 644 etc/fcron.conf \
- && chown root:fcron etc/fcron.conf var/spool/fcron /fcrontabs \
- && chmod g+rwx var/spool/fcron/ /fcrontabs/ \
- && chmod +x /usr/local/bin/*
+# Dockerfile will auto gunzip but will not auto untar
+WORKDIR /tmp
+ADD http://fcron.free.fr/archives/fcron-${FCRON_VERSION}.src.tar.gz fcron.tar
+RUN tar -xf fcron.tar \
+	&& cd fcron-${FCRON_VERSION} \
+	&& ./configure \
+	&& make \
+	&& make install
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y -qq remove --purge \
+ 	gcc \
+ 	make \
+ && apt-get -y autoremove --purge
+
+ADD https://github.com/kreuzwerker/envplate/releases/download/v0.0.8/ep-linux /usr/local/bin/ep
+
+COPY resources/launch.sh /usr/local/bin/launch.sh
+COPY resources/environ_bash.sh /usr/local/bin/environ_bash.sh
+COPY resources/fcron.conf /usr/local/etc/fcron.conf
+
+RUN mkdir /fcrontabs \
+ && chown root:fcron /usr/local/etc/fcron.conf /fcrontabs \
+ && chmod 644 /usr/local/etc/fcron.conf /fcrontabs
+
+RUN chmod +x /usr/local/bin/*
 
 VOLUME ["/fcrontabs", "/usr/local/var/spool/fcron"]
 WORKDIR /fcrontabs
 
-ENV FCRON_COMMANDS="EXAMPLE_CMD_1" FCRON_ENV_VARS="EXAMPLE_ENV_1" \
- EXAMPLE_CMD_1='@ 1 echo $EXAMPLE_ENV_1' \
- EXAMPLE_ENV_1="success"
+ENV FCRON_COMMANDS="EXAMPLE_CMD_1" \
+	EXAMPLE_CMD_1='@ 1 echo $PATH'
 
 CMD ["/usr/local/bin/launch.sh"]
+
+
+
+
+
