@@ -4,4 +4,7 @@ set -o allexport
 source /tmp/environ
 set +o allexport
 
-exec /bin/bash
+#remove first parameter as fcron lauch this shell wrapper with the -c option
+shift
+
+exec "$@"
