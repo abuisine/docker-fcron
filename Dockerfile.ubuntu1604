@@ -1,6 +1,6 @@
-FROM	debian:jessie
+FROM	ubuntu:16.04
 LABEL	maintainer="Alexandre Buisine <alexandrejabuisine@gmail.com>"
-LABEL	version "4.0.1"
+LABEL	version "4.1.0"
 
 # This container should be built with the --squash option in order to avoid huge containers
 
@@ -48,8 +48,3 @@ ENV FCRON_COMMANDS="EXAMPLE_CMD_1" \
 	EXAMPLE_CMD_1='@ 1 echo $PATH'
 
 CMD ["/usr/local/bin/launch.sh"]
-
-
-
-
-
