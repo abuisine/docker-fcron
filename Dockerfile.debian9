@@ -1,6 +1,6 @@
 FROM	debian:9
 LABEL	maintainer="Alexandre Buisine <alexandrejabuisine@gmail.com>"
-LABEL	version "4.1.0"
+LABEL	version "4.1.1"
 
 # This container should be built with the --squash option in order to avoid huge containers
 
